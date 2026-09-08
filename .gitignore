@@ -1,0 +1,15 @@
+# Exclude Python build outputs
+__pycache__/
+*.pyc
+
+# Exclude PyInstaller compilation workspace
+build/
+dist/
+*.spec
+
+# Exclude Excel log files
+*.xlsx
+
+# Exclude generated installer files
+CampusQueueSetup.exe
+*.iss
