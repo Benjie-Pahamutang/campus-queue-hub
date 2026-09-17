@@ -27,7 +27,7 @@ void setup() {
   // Main USB Serial Communication with Python (main.py)
   Serial.begin(9600);
   
-  // SoftwareSerial for Thermal Printer (Standard default baud rate set to 9600)
+  // SoftwareSerial for Thermal Printer
   printerSerial.begin(9600);
   
   // Configure active-LOW buzzer pins
@@ -65,7 +65,7 @@ void playQueueChime() {
 }
 
 // 🎟️ THERMAL PRINTER RECEIPT FUNCTION (ESC/POS)
-void printTicket(String ticketType, String ticketNum, String name, String purpose, String dateStr, String timeStr) {
+void printTicket(String ticketType, String ticketNum, String name, String purpose, String dateStr, String timeStr, String apptStr) {
   // Ensure SoftwareSerial is listening
   printerSerial.listen();
   
@@ -109,7 +109,7 @@ void printTicket(String ticketType, String ticketNum, String name, String purpos
   printerSerial.write((uint8_t)0x21); 
   printerSerial.write((uint8_t)0x00);
   
-  // Dynamic Purpose & Payer Details
+  // Details Section (Payer & Purpose)
   printerSerial.println(F("................................"));
   printerSerial.println("Payer: " + name);
   printerSerial.println("Purpose: " + purpose);
@@ -118,6 +118,13 @@ void printTicket(String ticketType, String ticketNum, String name, String purpos
   // Date & Time
   printerSerial.println("DATE: " + dateStr);
   printerSerial.println("TIME: " + timeStr);
+  
+  // Print Appt ONLY if it contains a valid slot (hides when "NONE" or "N/A")
+  apptStr.trim();
+  if (apptStr != "NONE" && apptStr != "N/A" && apptStr.length() > 0) {
+    printerSerial.println("Appt: " + apptStr);
+  }
+  
   printerSerial.println(F("--------------------------------"));
   
   // Footer
@@ -139,8 +146,7 @@ void loop() {
     if (command == "B") {
       playQueueChime();
     } 
-    // Command format: P|TYPE|NUM|NAME|PURPOSE|DATE|TIME
-    // Example: P|S|001|John Doe|Tuition|Aug 30, 2026|11:33 AM
+    // Updated Command format matching Python: P|TYPE|NUM|NAME|PURPOSE|DATE|TIME|APPT
     else if (command.startsWith("P|")) {
       int p1 = command.indexOf('|');
       int p2 = command.indexOf('|', p1 + 1);
@@ -148,6 +154,7 @@ void loop() {
       int p4 = command.indexOf('|', p3 + 1);
       int p5 = command.indexOf('|', p4 + 1);
       int p6 = command.indexOf('|', p5 + 1);
+      int p7 = command.indexOf('|', p6 + 1);
       
       if (p1 != -1 && p2 != -1 && p3 != -1 && p4 != -1 && p5 != -1 && p6 != -1) {
         String ticketType = command.substring(p1 + 1, p2);
@@ -155,9 +162,18 @@ void loop() {
         String name       = command.substring(p3 + 1, p4);
         String purpose    = command.substring(p4 + 1, p5);
         String dateStr    = command.substring(p5 + 1, p6);
-        String timeStr    = command.substring(p6 + 1);
         
-        printTicket(ticketType, ticketNum, name, purpose, dateStr, timeStr);
+        String timeStr;
+        String apptStr = "NONE";
+        
+        if (p7 != -1) {
+          timeStr = command.substring(p6 + 1, p7);
+          apptStr = command.substring(p7 + 1);
+        } else {
+          timeStr = command.substring(p6 + 1);
+        }
+        
+        printTicket(ticketType, ticketNum, name, purpose, dateStr, timeStr, apptStr);
       }
     }
   }

@@ -1,0 +1,88 @@
+{
+    "last_active_date": "2026-09-17",
+    "daily_walkin_student": 2,
+    "daily_walkin_parent": 2,
+    "booking_slots": {
+        "2026-09-18_student": 7,
+        "Saturday_parent": 2,
+        "Saturday_student": 1
+    },
+    "active_session": {
+        "is_active": false
+    },
+    "paying_queue": [
+        {
+            "id": 10,
+            "student": "[Student] ulok",
+            "purpose": "Tuition (Php 09234)",
+            "is_appointment": false,
+            "appt_time": "N/A"
+        },
+        {
+            "id": 12,
+            "student": "[Student] BENJIE",
+            "purpose": "Tuition (Php 6000)",
+            "is_appointment": false,
+            "appt_time": "N/A"
+        },
+        {
+            "id": 4,
+            "student": "[Parent] wilme",
+            "purpose": "Tuition (Php 10000)",
+            "is_appointment": false,
+            "appt_time": "N/A"
+        },
+        {
+            "id": 5,
+            "student": "[Parent] 000844",
+            "purpose": "Tuition (Php wilvo)",
+            "is_appointment": false,
+            "appt_time": "N/A"
+        },
+        {
+            "id": 1,
+            "student": "[Parent] laka",
+            "purpose": "Tuition (Php 10923)",
+            "is_appointment": false,
+            "appt_time": "N/A"
+        },
+        {
+            "id": 13,
+            "student": "[Student] Jiekiel",
+            "purpose": "Tuition (Php 10000)",
+            "is_appointment": false,
+            "appt_time": "N/A"
+        },
+        {
+            "id": 1,
+            "student": "[Student] ayawkol",
+            "purpose": "Tuition (Php 60000)",
+            "is_appointment": false,
+            "appt_time": "N/A"
+        }
+    ],
+    "preparation_queue": [],
+    "advance_appointments": [
+        {
+            "id": 5,
+            "student": "[Student] kiel",
+            "purpose": "Tuition (Php 10000)",
+            "appt_time": "2026-09-18 @ Slot #005",
+            "is_parent": false
+        },
+        {
+            "id": 6,
+            "student": "[Student] haplas",
+            "purpose": "Tuition (Php 10000)",
+            "appt_time": "2026-09-18 @ Slot #006",
+            "is_parent": false
+        },
+        {
+            "id": 7,
+            "student": "[Student] loslos",
+            "purpose": "Tuition (Php 20000)",
+            "appt_time": "2026-09-18 @ Slot #007",
+            "is_parent": false
+        }
+    ]
+}
